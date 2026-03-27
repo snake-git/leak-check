@@ -40,8 +40,8 @@ def mask_name(v: str) -> str:
     if len(v) == 1:
         return v + "*"
     if len(v) == 2:
-        return v[0] + "*"
-    return v[0] + "*" + v[-1]
+        return "*" + v[1]
+    return "*" + v[-1]
 
 
 # car = 普通文本（车辆配置）
