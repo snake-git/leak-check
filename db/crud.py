@@ -138,8 +138,8 @@ def read_persons_by_dig(
             ).all()
 
             if current_depth == 1 and len(id_results) > threshold:
-                print(f"\n🔥 [ID字段异常] 命中 {len(id_results)} 条")
-                print(f"输入值: {list(id_set)}")
+                print(f"WARN:     \n🔥 [ID字段异常] 命中 {len(id_results)} 条")
+                print(f"WARN:     输入值: {list(id_set)}")
 
             results += id_results
 
@@ -152,8 +152,8 @@ def read_persons_by_dig(
             ).all()
 
             if current_depth == 1 and len(phone_results) > threshold:
-                print(f"\n🔥 [PHONE字段异常] 命中 {len(phone_results)} 条")
-                print(f"输入值: {list(phone_set)}")
+                print(f"WARN:     \n🔥 [PHONE字段异常] 命中 {len(phone_results)} 条")
+                print(f"WARN:     输入值: {list(phone_set)}")
 
             results += phone_results
 
@@ -166,8 +166,8 @@ def read_persons_by_dig(
             ).all()
 
             if current_depth == 1 and len(email_results) > threshold:
-                print(f"\n🔥 [EMAIL字段异常] 命中 {len(email_results)} 条")
-                print(f"输入值: {list(email_set)}")
+                print(f"WARN:     \n🔥 [EMAIL字段异常] 命中 {len(email_results)} 条")
+                print(f"WARN:     输入值: {list(email_set)}")
 
             results += email_results
 
@@ -180,8 +180,8 @@ def read_persons_by_dig(
             ).all()
 
             if current_depth == 1 and len(qq_results) > threshold:
-                print(f"\n🔥 [QQ字段异常] 命中 {len(qq_results)} 条")
-                print(f"输入值: {list(qq_set)}")
+                print(f"WARN:     \n🔥 [QQ字段异常] 命中 {len(qq_results)} 条")
+                print(f"WARN:     输入值: {list(qq_set)}")
 
             results += qq_results
 
@@ -207,7 +207,7 @@ def read_persons_by_dig(
 
         # ✅ 安全保护：记录数限制
         if len(all_persons) >= max_records:
-            print(f"[WARN] 达到最大记录限制 {max_records}，提前停止")
+            print(f"WARN:     BFS 处于 {current_depth} 层, 达到最大记录限制 {max_records}，提前停止")
             break
 
         # ✅ 没有新数据 → 提前结束（比 max_depth 更早停）
