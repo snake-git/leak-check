@@ -17,19 +17,6 @@ connect_args = {"check_same_thread": False}  # SQLite 特有
 engine = create_engine(sqlite_url, connect_args=connect_args)
 
 
-# ---------- 开启外键约束 ----------
-@event.listens_for(engine, "connect")
-def enable_sqlite_foreign_keys(dbapi_connection, connection_record):
-    cursor = dbapi_connection.cursor()
-
-    # 开启外键
-    cursor.execute("PRAGMA foreign_keys=ON;")
-
-    # ✅ 验证是否开启成功
-    cursor.execute("PRAGMA foreign_keys;")
-    cursor.close()
-
-
 # ---------- Session 依赖 ----------
 def get_session():
     with Session(engine) as session:
