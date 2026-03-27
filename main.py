@@ -97,6 +97,22 @@ def detect_input_type(user_input: str) -> str:
     else:
         return "unknown"
 
+def clean_str_set(values):
+    return list({
+        v.strip() for v in values
+        if isinstance(v, str) and v.strip()
+    })
+
+
+def clean_int_set(values):
+    result = set()
+    for v in values:
+        try:
+            if v is not None and str(v).strip():
+                result.add(int(v))
+        except (ValueError, TypeError):
+            continue
+    return list(result)
 
 @app.post("/dig", summary="查询 个人信息“泄漏” 记录", response_model=ModelResponsePersonAggregated)
 def get_person_by_dig(body: ModelRequestQuery, session: SessionDep):
@@ -119,18 +135,26 @@ def get_person_by_dig(body: ModelRequestQuery, session: SessionDep):
 
     # 聚合并去重
     aggregated = ModelResponsePersonAggregated(
-        id=list({p.id for p in persons}),
-        name=list({p.name for p in persons}),
-        receiver=list({p.receiver for p in persons}),
-        nickname=list({p.nickname for p in persons}),
-        phone=list({p.phone for p in persons}),
-        address=list({p.address for p in persons}),
-        car=list({p.car for p in persons}),
-        email=list({p.email for p in persons}),
-        qq=list({p.qq for p in persons}),
-        weibo=list({p.weibo for p in persons}),
-        contact=list({p.contact for p in persons}),
-        company=list({p.company for p in persons}),
-        source=list({p.source_obj.source if p.source_obj else None for p in persons})
+        id=list({p.id for p in persons if p.id is not None}),
+
+        name=clean_str_set(p.name for p in persons),
+        receiver=clean_str_set(p.receiver for p in persons),
+        nickname=clean_str_set(p.nickname for p in persons),
+        phone=clean_str_set(p.phone for p in persons),
+        address=clean_str_set(p.address for p in persons),
+        car=clean_str_set(p.car for p in persons),
+        email=clean_str_set(p.email for p in persons),
+
+        qq=clean_int_set(p.qq for p in persons),
+        weibo=clean_int_set(p.weibo for p in persons),
+
+        contact=clean_str_set(p.contact for p in persons),
+        company=clean_str_set(p.company for p in persons),
+
+        source=list({
+            p.source_obj.source
+            for p in persons
+            if p.source_obj and p.source_obj.source
+        })
     )
     return aggregated
