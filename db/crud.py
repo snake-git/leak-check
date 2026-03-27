@@ -19,7 +19,7 @@ engine = create_engine(sqlite_url, connect_args=connect_args)
 
 # ---------- 开启外键约束 ----------
 @event.listens_for(engine, "connect")
-def enable_sqlite_foreign_keys(dbapi_connection):
+def enable_sqlite_foreign_keys(dbapi_connection, connection_record):
     cursor = dbapi_connection.cursor()
 
     # 开启外键
