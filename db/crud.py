@@ -1,4 +1,4 @@
-from typing import Annotated, Sequence, Set, List
+from typing import Annotated, Sequence, Set
 
 from fastapi import Depends
 from pydantic import EmailStr
@@ -19,7 +19,7 @@ engine = create_engine(sqlite_url, connect_args=connect_args)
 
 # ---------- 开启外键约束 ----------
 @event.listens_for(engine, "connect")
-def enable_sqlite_foreign_keys(dbapi_connection, connection_record):
+def enable_sqlite_foreign_keys(dbapi_connection):
     cursor = dbapi_connection.cursor()
 
     # 开启外键
