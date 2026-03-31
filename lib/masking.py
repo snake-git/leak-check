@@ -7,7 +7,7 @@ from typing import Optional, Iterable
 def mask_phone(v: str) -> str:
     if not v or len(v) < 7:
         return "***"
-    return v[:3] + "****" + v[-2:]
+    return v[:3] + "******" + v[-2:]
 
 
 def mask_email(v: str) -> str:
