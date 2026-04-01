@@ -29,9 +29,9 @@ def mask_id(v: str) -> str:
 
 def mask_number(v: str) -> str:
     v = str(v)
-    if len(v) <= 4:
+    if len(v) <= 3:
         return "*" * len(v)
-    return "*" * (len(v) - 4) + v[-4:]
+    return "*" * (len(v) - 3) + v[-3:]
 
 
 def mask_name(v: str) -> str:
@@ -57,7 +57,7 @@ def mask_car(v: str) -> str:
 def mask_address(v: str) -> str:
     if not v:
         return "***"
-    return v[:3] + "****" if len(v) > 3 else v + "****"
+    return v[:2] + "****" if len(v) > 2 else v + "****"
 
 
 # ========== 分发器 ==========
